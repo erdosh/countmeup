@@ -1,31 +1,31 @@
-## Synopsis
+Project Summary:
 
-At the top of the file there should be a short introduction and/ or overview that explains **what** the project is. This description should match descriptions added for package managers (Gemspec, package.json, etc.)
+This project is for exercise purposes. "countmeup" represents a poll for candidates and voters who vote for one or more candidates to be selected.
 
-## Code Example
+Application Code And Classes Explained Briefly:
+All the classes and methods are documented inside the code, however this part is added to provide a brief introduction about the application classes.
 
-Show what the library does as concisely as possible, developers should be able to figure out **how** your project solves their problem by looking at the code example. Make sure the API you are showing off is obvious, and that your code is short and concise.
+AppServer.java: The class wrapping our jetty web server and the necessary methods to run, terminate and query the current condition of the server.
+RestHandler.java: The class responsible for handling every rest request. Just processes the post request input and delegates the necessary code logic to the Poll class.
+Poll.java: All the necessary logic for voting or result calculation is implemented here.
+ResultObject.java: This object represents the result for one single candidate as a candidateName-voteCount pair.
+Vote.java: This is the necessary encapsulation of the voter and the candidateName that the voter vote for.
 
-## Motivation
+AppTest.java: Unit-test class for testing the necessary cases.
+TestPostClient: The post client class which can be used to cerate vote and result rest call without an external tool like SOAP-UI. 
 
 A short description of the motivation behind the creation and maintenance of the project. This should explain **why** the project exists.
 
-## Installation
+INSTALLATION - HOW TO RUN:
+There is no installation step necessary for the project. Just run the AppServer clas main method and the jetty server will wait for any incoming request with local url:
+http://localhost:8181/countmeup/
+For vote: http://localhost:8181/countmeup/vote
+For results: http://localhost:8181/countmeup/result
+There is a post client to test the Rest server methods. You can use the test client inside the unit test class AppTest of the project or in a custom class you provide.
 
-Provide code examples and explanations of how to get the project.
+TESTS:
+Test scenarios are grouped into two as voteTest and resultTests. For simplicity the app server necessary for this applications is started up in setUp method of the test class and the server is shot down after all test cases run.
 
-## API Reference
-
-Depending on the size of the project, if it is small and simple enough the reference docs can be added to the README. For medium size to larger projects it is important to at least provide a link to where the API reference docs live.
-
-## Tests
-
-Describe and show how to run the tests with code examples.
-
-## Contributors
-
-Let people know how they can dive into the project, include important links to things like issue trackers, irc, twitter accounts if applicable.
-
-## License
-
-A short snippet describing the license (MIT, Apache, etc.)
+ASSUMPTIONS:
+vote requests and getResult requests can be formed in our AppTest class. However if it is necessary to call it from outside like SOAP-UI tool, the json input String for the vote request would be like 
+{"voterID":"user1","candidateName":"A"}. The getResult method returns a JSon String will be like: [{"candidateName":"A","voteCount":"8"},{"candidateName":"B","voteCount":"5"},{"candidateName":"C","voteCount":"3"},{"candidateName":"D","voteCount":"1"}]
